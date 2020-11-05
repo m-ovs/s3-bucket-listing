@@ -1,0 +1,89 @@
+/*
+ S3 Bucket Listing Theme css 
+*/
+table.s3_listing_files, table.s3_listing_files tr, table.s3_listing_files tr td {border:none;}
+table.s3_listing_files tr td {border-bottom: 1px solid #ccc;}
+table.s3_listing_files a {color:#00c;}
+
+table.s3_listing_files a:before{content:url('icons/default.png'); margin: 0 10px 0 5px;}
+table.s3_listing_files a.folder-home:before{content:url('icons/folder-home.png'); margin: 0 10px 0 5px;}
+table.s3_listing_files a.folder:before{content:url('icons/folder.png'); margin: 0 10px 0 5px;}
+table.s3_listing_files a[href$=".arj"]:before { content:url('icons/archive.png');}
+table.s3_listing_files a[href$=".7z"]:before { content:url('icons/archive.png');}
+table.s3_listing_files a[href$=".bz"]:before { content:url('icons/archive.png');}
+table.s3_listing_files a[href$=".bz2"]:before { content:url('icons/archive.png');}
+table.s3_listing_files a[href$=".cab"]:before { content:url('icons/archive.png');}
+table.s3_listing_files a[href$=".xz"]:before { content:url('icons/archive.png');}
+table.s3_listing_files a[href$=".mp3"]:before { content:url('icons/audio.png');}
+table.s3_listing_files a[href$=".mid"]:before { content:url('icons/audio.png');}
+table.s3_listing_files a[href$=".midi"]:before { content:url('icons/audio.png');}
+table.s3_listing_files a[href$=".wav"]:before { content:url('icons/audio.png');}
+table.s3_listing_files a[href$=".bin"]:before { content:url('icons/bin.png');}
+table.s3_listing_files a[href$=".bmp"]:before { content:url('icons/bmp.png');}
+table.s3_listing_files a[href$=".c"]:before { content:url('icons/c.png');}
+table.s3_listing_files a[href$=".cpp"]:before { content:url('icons/cpp.png');}
+table.s3_listing_files a[href$=".calc"]:before { content:url('icons/calc.png');}
+table.s3_listing_files a[href$=".css"]:before { content:url('icons/css.png');}
+table.s3_listing_files a[href$=".deb"]:before { content:url('icons/deb.png');}
+table.s3_listing_files a[href$=".diff"]:before { content:url('icons/diff.png');}
+table.s3_listing_files a[href$=".doc"]:before { content:url('icons/doc.png');}
+table.s3_listing_files a[href$=".docx"]:before { content:url('icons/docx.png');}
+table.s3_listing_files a[href$=".draw"]:before { content:url('icons/draw.png');}
+table.s3_listing_files a[href$=".eps"]:before { content:url('icons/eps.png');}
+table.s3_listing_files a[href$=".exe"]:before { content:url('icons/exe.png');}
+table.s3_listing_files a[href$=".otf"]:before { content:url('icons/font.png');}
+table.s3_listing_files a[href$=".ttf"]:before { content:url('icons/font.png');}
+table.s3_listing_files a[href$=".ttc"]:before { content:url('icons/font.png');}
+table.s3_listing_files a[href$=".woff"]:before { content:url('icons/font.png');}
+table.s3_listing_files a[href$=".woff2"]:before { content:url('icons/font.png');}
+table.s3_listing_files a[href$=".gif"]:before { content:url('icons/gif.png');}
+table.s3_listing_files a[href$=".gz"]:before { content:url('icons/gzip.png');}
+table.s3_listing_files a[href$=".gzip"]:before { content:url('icons/archive.png');}
+table.s3_listing_files a[href$=".h"]:before { content:url('icons/h.png');}
+table.s3_listing_files a[href$=".hpp"]:before { content:url('icons/hpp.png');}
+table.s3_listing_files a[href$=".html"]:before { content:url('icons/html.png');}
+table.s3_listing_files a[href$=".ico"]:before { content:url('icons/ico.png');}
+table.s3_listing_files a[href$=".bmp"]:before { content:url('icons/image.png');}
+table.s3_listing_files a[href$=".install"]:before { content:url('icons/install.png');}
+table.s3_listing_files a[href$=".java"]:before { content:url('icons/java.png');}
+table.s3_listing_files a[href$=".jar"]:before { content:url('icons/java.png');}
+table.s3_listing_files a[href$=".jpg"]:before { content:url('icons/jpg.png');}
+table.s3_listing_files a[href$=".js"]:before { content:url('icons/js.png');}
+table.s3_listing_files a[href$=".json"]:before { content:url('icons/json.png');}
+table.s3_listing_files a[href$=".log"]:before { content:url('icons/log.png');}
+table.s3_listing_files a[href$=".makefile"]:before { content:url('icons/makefile.png');}
+table.s3_listing_files a[href$=".md"]:before { content:url('icons/markdown.png');}
+table.s3_listing_files a[href$=".pkg"]:before { content:url('icons/package.png');}
+table.s3_listing_files a[href$=".pdf"]:before { content:url('icons/pdf.png');}
+table.s3_listing_files a[href$=".php"]:before { content:url('icons/php.png');}
+table.s3_listing_files a[href$=".m3u"]:before { content:url('icons/playlist.png');}
+table.s3_listing_files a[href$=".png"]:before { content:url('icons/png.png');}
+table.s3_listing_files a[href$=".ppt"]:before { content:url('icons/pres.png');}
+table.s3_listing_files a[href$=".psd"]:before { content:url('icons/psd.png');}
+table.s3_listing_files a[href$=".py"]:before { content:url('icons/py.png');}
+table.s3_listing_files a[href$=".rar"]:before { content:url('icons/rar.png');}
+table.s3_listing_files a[href$=".rb"]:before { content:url('icons/rb.png');}
+table.s3_listing_files a[href$=".readme"]:before { content:url('icons/readme.png');}
+table.s3_listing_files a[href$=".rpm"]:before { content:url('icons/rpm.png');}
+table.s3_listing_files a[href$=".rss"]:before { content:url('icons/rss.png');}
+table.s3_listing_files a[href$=".rtf"]:before { content:url('icons/rtf.png');}
+table.s3_listing_files a[href$=".script"]:before { content:url('icons/script.png');}
+table.s3_listing_files a[href$=".sql"]:before { content:url('icons/sql.png');}
+table.s3_listing_files a[href$=".tar"]:before { content:url('icons/tar.png');}
+table.s3_listing_files a[href$=".tex"]:before { content:url('icons/tex.png');}
+table.s3_listing_files a[href$=".install"]:before { content:url('icons/install.png');}
+table.s3_listing_files a[href$=".txt"]:before { content:url('icons/text.png');}
+table.s3_listing_files a[href$=".tif"]:before { content:url('icons/tiff.png');}
+table.s3_listing_files a[href$=".tiff"]:before { content:url('icons/tiff.png');}
+table.s3_listing_files a[href$=".torrent"]:before { content:url('icons/torrent.png');}
+table.s3_listing_files a[href$=".vcal"]:before { content:url('icons/vcal.png');}
+table.s3_listing_files a[href$=".vcard"]:before { content:url('icons/vcard.png');}
+table.s3_listing_files a[href$=".mp4"]:before { content:url('icons/video.png');}
+table.s3_listing_files a[href$=".xml"]:before { content:url('icons/xml.png');}
+table.s3_listing_files a[href$=".zip"]:before { content:url('icons/zip.png');}
+table.s3_listing_files a[href$=".dmg"]:before { content:url('icons/package.png');}
+table.s3_listing_files a[href$=".apk"]:before { content:url('icons/package.png');}
+table.s3_listing_files a[href$=".mpkg"]:before { content:url('icons/package.png');}
+table.s3_listing_files a[href$=".md5"]:before { content:url('icons/bin.png');}
+table.s3_listing_files a[href$=".sha1"]:before { content:url('icons/bin.png');}
+table.s3_listing_files a[href$=".sha256"]:before { content:url('icons/bin.png');}
