@@ -1,6 +1,10 @@
 /*
  S3 Bucket Listing Theme css 
 */
+.s3_bucket_listing_breadcrumbs {line-height:1.2; margin-left:8px; min-height:1.2em;}
+.s3_bucket_listing_breadcrumbs a { color: #00c; font-size:1.1em;}
+.s3_bucket_listing_breadcrumbs a.folder-home:before{content:url('icons/home.png'); margin: 0 5px 0 5px;}
+
 table.s3_listing_files, table.s3_listing_files tr, table.s3_listing_files tr td {border:none;}
 table.s3_listing_files tr td {border-bottom: 1px solid #ccc;}
 table.s3_listing_files a {color:#00c;}

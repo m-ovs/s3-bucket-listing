@@ -36,10 +36,14 @@ class S3BucketListing
 
     private function init()
     {
-        if(!get_option('s3_bucket_listing_endpoint')) {
+        if (! get_option('s3_bucket_listing_endpoint')) {
             return;
         }
-        
+        add_action('init', array(
+            $this,
+            'do_rewrite'
+        ));
+
         $this->client = new Aws\S3\S3Client([
 
             'version' => 'latest',
@@ -50,33 +54,51 @@ class S3BucketListing
                 'secret' => get_option('s3_bucket_listing_secret')
             ]
         ]);
-        
+
         add_shortcode('s3_bucket_listing', function ($att) {
             if (empty($att['bucket'])) {
                 echo 'Bucket parametr missing. Use [s3_bucket_listing bucket="my_bucket"]';
                 return;
             }
+            // echo '1';echo get_query_var('dir'); die();
             $root = ! empty($att['root']) ? $att['root'] : '';
             $root = preg_replace('#([^\/]+)\/?$#', '$1/', $root); // add trailing slash
-            $prefix = urldecode(sanitize_text_field($_GET['dir']));
+
+            preg_match('#^/?(.*?)/(.*)/?$#', $_SERVER['REQUEST_URI'], $matches);
+            $home_url = $matches[1] . '/';
+            (get_query_var('dir')) ? $prefix = urldecode(sanitize_text_field(get_query_var('dir'))) . '/' : $prefix = '';
             $objects = $this->client->listObjectsV2([
                 'Bucket' => $att['bucket'],
                 'Delimiter' => '/',
                 'Prefix' => $root . $prefix
             ]);
-            echo 'Index of ' . (! empty($prefix) ? $prefix : '/');
-            echo '<table class="s3_listing_files">';
-            // echo '<tr><td><a class="folder-home" href="?dir=">.</a>' . '</td><td></td><td></td></tr>';
+            // echo 'Index of ' . (! empty($prefix) ? $prefix : '/');
+            echo '<div class="s3_bucket_listing_breadcrumbs">';
             if (! empty($prefix)) {
-                echo '<tr><td><a class="folder-home" href="?dir=' . urlencode(preg_replace('#[^\/]+\/$#', '', $prefix)) . '">..</a>' . '</td><td></td><td></td></tr>';
-            }
-            if (isset($objects['CommonPrefixes'])){
-                foreach ($objects['CommonPrefixes'] as $obj) {
-                    $obj_prefix = preg_replace('#^' . $root . '#', '', $obj['Prefix']);
-                    echo '<tr><td><a class="folder" href="?dir=' . urlencode($obj_prefix) . '">' . preg_replace('#^' . $prefix . '#', '', $obj_prefix) . '</a>' . "</td><td></td><td></td></tr>";
+                echo '<a class="folder-home" href="/' . $home_url . '"></a>';
+                $parts = explode('/', $prefix);
+                $parts_url = '';
+                foreach ($parts as $part) {
+                    if ($part) {
+                        echo ' > ';
+                        $parts_url .= $part . '/';
+                        echo '<a href="/' . $home_url . $parts_url . '">' . $part . '</a>';
+                    }
                 }
             }
-            if (isset($objects['Contents'])){
+            echo '</div>';
+            echo '<table class="s3_listing_files">';
+            // echo '<tr><td><a class="folder-home" href="/'.$home_url.'">.</a>' . '</td><td></td><td></td></tr>';
+            if (! empty($prefix)) {
+                echo '<tr><td><a class="folder-home" href="/' . $home_url . preg_replace('#[^\/]+\/$#', '', $prefix) . '">..</a>' . '</td><td></td><td></td></tr>';
+            }
+            if (isset($objects['CommonPrefixes'])) {
+                foreach ($objects['CommonPrefixes'] as $obj) {
+                    $obj_prefix = preg_replace('#^' . $root . '#', '', $obj['Prefix']);
+                    echo '<tr><td><a class="folder" href="/' . $home_url . $obj_prefix . '">' . preg_replace('#^' . $prefix . '#', '', $obj_prefix) . '</a>' . "</td><td></td><td></td></tr>";
+                }
+            }
+            if (isset($objects['Contents'])) {
                 foreach ($objects['Contents'] as $obj) {
                     (! empty(get_option('s3_bucket_listing_domain'))) ? $url = get_option('s3_bucket_listing_domain') . '/' : ($url = get_option('s3_bucket_listing_endpoint') . '/' . $att['bucket'] . '/' . $root);
 
@@ -87,11 +109,37 @@ class S3BucketListing
             echo '</table>';
         });
     }
-    
+
     private function filesize_formatted($size)
     {
-        $units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $units = array(
+            'B',
+            'KB',
+            'MB',
+            'GB',
+            'TB',
+            'PB',
+            'EB',
+            'ZB',
+            'YB'
+        );
         $power = $size > 0 ? floor(log($size, 1024)) : 0;
         return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
+    }
+
+    public function do_rewrite()
+    {
+        $page = get_page_by_path($_SERVER['REQUEST_URI']);
+        if (! isset($page->ID)) {
+            preg_match('#^/?(.*?)/(.+)/?$#', $_SERVER['REQUEST_URI'], $matches);
+            $parent_page = get_page_by_path($matches[1]);
+            if ($parent_page) {
+                $content = $parent_page->post_content;
+                if (preg_match('/\[s3_bucket_listing(.*?)\]/i', $content)) {
+                    add_rewrite_rule('^/?(.*?)/(.+)/?$', 'index.php?pagename=$matches[1]&dir=$matches[2]', 'top');
+                    add_rewrite_tag('%dir%', '([^&]+)');
+                }
+            }
+        }
     }
 }
