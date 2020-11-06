@@ -36,6 +36,10 @@ class S3BucketListing
 
     private function init()
     {
+        if(!get_option('s3_bucket_listing_endpoint')) {
+            return;
+        }
+        
         $this->client = new Aws\S3\S3Client([
 
             'version' => 'latest',
@@ -66,18 +70,21 @@ class S3BucketListing
             if (! empty($prefix)) {
                 echo '<tr><td><a class="folder-home" href="?dir=' . urlencode(preg_replace('#[^\/]+\/$#', '', $prefix)) . '">..</a>' . '</td><td></td><td></td></tr>';
             }
-            foreach ($objects['CommonPrefixes'] as $obj) {
-                $obj_prefix = preg_replace('#^' . $root . '#', '', $obj['Prefix']);
-                echo '<tr><td><a class="folder" href="?dir=' . urlencode($obj_prefix) . '">' . preg_replace('#^' . $prefix . '#', '', $obj_prefix) . '</a>' . "</td><td></td><td></td></tr>";
+            if (isset($objects['CommonPrefixes'])){
+                foreach ($objects['CommonPrefixes'] as $obj) {
+                    $obj_prefix = preg_replace('#^' . $root . '#', '', $obj['Prefix']);
+                    echo '<tr><td><a class="folder" href="?dir=' . urlencode($obj_prefix) . '">' . preg_replace('#^' . $prefix . '#', '', $obj_prefix) . '</a>' . "</td><td></td><td></td></tr>";
+                }
             }
-            if (isset($objects['Contents']))
+            if (isset($objects['Contents'])){
                 foreach ($objects['Contents'] as $obj) {
                     (! empty(get_option('s3_bucket_listing_domain'))) ? $url = get_option('s3_bucket_listing_domain') . '/' : ($url = get_option('s3_bucket_listing_endpoint') . '/' . $att['bucket'] . '/' . $root);
 
                     $key = preg_replace('#^' . $root . $prefix . '#', '', $obj['Key']);
                     echo '<tr><td><a href="' . $url . $prefix . $key . '">' . $key . '</a></td><td>' . $obj['LastModified']->format('Y-m-d H:i:s') . '</td><td>' . $this->filesize_formatted($obj['Size']) . '</td></tr>';
                 }
-            echo '<table>';
+            }
+            echo '</table>';
         });
     }
     
