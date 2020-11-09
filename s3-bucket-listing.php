@@ -18,4 +18,13 @@ if (! is_admin()) {
     });
 } 
 $S3BucketListing = S3BucketListing::getInstance(); 
-$S3BucketListingSettings = S3BucketListingSettings::getInstance(); 
+$S3BucketListingSettings = S3BucketListingSettings::getInstance();
+
+
+
+function s3BucketListingFlushRules()
+{
+    flush_rewrite_rules();
+}
+register_activation_hook(__FILE__, 's3BucketListingFlushRules');
+register_deactivation_hook(__FILE__, 's3BucketListingFlushRules');

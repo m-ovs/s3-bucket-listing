@@ -137,8 +137,8 @@ class S3BucketListing
                 if (preg_match('/\[s3_bucket_listing(.*?)\]/i', $content)) {
                     add_rewrite_rule('^/?(.*?)/(.+)/?$', 'index.php?pagename=$matches[1]&dir=$matches[2]', 'top');
                     add_rewrite_tag('%dir%', '([^&]+)');
-
-                    if (! in_array(get_option('rewrite_rules'), 'index.php?pagename=$matches[1]&dir=$matches[2]')) {
+                    
+                    if (! in_array('index.php?pagename=$matches[1]&dir=$matches[2]', get_option('rewrite_rules'))) {
                         flush_rewrite_rules();
                     }
                 }
