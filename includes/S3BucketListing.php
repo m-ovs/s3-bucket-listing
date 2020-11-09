@@ -132,11 +132,15 @@ class S3BucketListing
         if (! isset($page->ID)) {
             preg_match('#^/?(.*?)/(.+)/?$#', $_SERVER['REQUEST_URI'], $matches);
             $parent_page = get_page_by_path($matches[1]);
-            if (!empty($parent_page->post_content)) {
+            if (! empty($parent_page->post_content)) {
                 $content = $parent_page->post_content;
                 if (preg_match('/\[s3_bucket_listing(.*?)\]/i', $content)) {
                     add_rewrite_rule('^/?(.*?)/(.+)/?$', 'index.php?pagename=$matches[1]&dir=$matches[2]', 'top');
                     add_rewrite_tag('%dir%', '([^&]+)');
+
+                    if (! in_array(get_option('rewrite_rules'), 'index.php?pagename=$matches[1]&dir=$matches[2]')) {
+                        flush_rewrite_rules();
+                    }
                 }
             }
         }
