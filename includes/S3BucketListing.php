@@ -35,7 +35,7 @@ class S3BucketListing
     }
 
     private function init()
-    {
+    {      
         if (! get_option('s3_bucket_listing_endpoint')) {
             return;
         }
@@ -60,7 +60,6 @@ class S3BucketListing
                 echo 'Bucket parametr missing. Use [s3_bucket_listing bucket="my_bucket"]';
                 return;
             }
-            // echo '1';echo get_query_var('dir'); die();
             $root = ! empty($att['root']) ? $att['root'] : '';
             $root = preg_replace('#([^\/]+)\/?$#', '$1/', $root); // add trailing slash
 
@@ -133,7 +132,7 @@ class S3BucketListing
         if (! isset($page->ID)) {
             preg_match('#^/?(.*?)/(.+)/?$#', $_SERVER['REQUEST_URI'], $matches);
             $parent_page = get_page_by_path($matches[1]);
-            if ($parent_page) {
+            if (!empty($parent_page->post_content)) {
                 $content = $parent_page->post_content;
                 if (preg_match('/\[s3_bucket_listing(.*?)\]/i', $content)) {
                     add_rewrite_rule('^/?(.*?)/(.+)/?$', 'index.php?pagename=$matches[1]&dir=$matches[2]', 'top');
