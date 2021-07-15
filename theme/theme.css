@@ -6,7 +6,7 @@
 .s3_bucket_listing_breadcrumbs a.folder-home:before{content:url('icons/home.png'); margin: 0 5px 0 5px;}
 
 table.s3_listing_files, table.s3_listing_files tr, table.s3_listing_files tr td {border:none;}
-table.s3_listing_files tr td {border-bottom: 1px solid #ccc;}
+table.s3_listing_files tr td {border-bottom: 1px solid #ccc; padding: 0.3em;}
 table.s3_listing_files a {color:#00c;}
 
 table.s3_listing_files a:before{content:url('icons/default.png'); margin: 0 10px 0 5px;}

@@ -17,9 +17,9 @@ if (! is_admin()) {
         wp_enqueue_style('s3_bucket_listing',  plugins_url(). '/s3-bucket-listing/theme/theme.css', array(), '1.0', 'screen');
     });
 } 
+
 $S3BucketListing = S3BucketListing::getInstance(); 
 $S3BucketListingSettings = S3BucketListingSettings::getInstance();
-
 
 
 function s3BucketListingFlushRules()

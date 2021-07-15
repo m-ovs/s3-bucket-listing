@@ -105,8 +105,10 @@ class S3BucketListingSettings
         ?>
         <p>Usage of plugin: </p>
         <p>1. Set up connect credentials on this page.<br />
-        2. Use shortcode [s3_bucket_listing bucket="my_bucket" root="my_folder"] to display content of your bucket "my_bucket" starting from prefix ( folder ) named "my_folder".<br />
-		Bucket param is obligatory. If root param is not set you will see the entire content of the bucket.
+        2. Use shortcode [s3_bucket_listing bucket="my_bucket" root="my_folder" dir="/home/downloads"] to display content of your bucket "my_bucket" starting from prefix ( folder ) named "my_folder".<br />
+		Bucket param is obligatory. <br />
+		If optionaly "root" parametr is not set you will see the entire content of the bucket.<br />
+		If optionaly parametr "dir" is set the plugin will try to find content inside local directory (/home/downloads in example) if nothing found in s3 bucket. 
 		</p>            
 		<hr />
         <form method="post" action="options.php">
